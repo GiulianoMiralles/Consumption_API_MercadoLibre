@@ -6,8 +6,10 @@ let api = 'https://api.mercadolibre.com/sites/MLA/search?q=';
 
 // Funciones
 // Funcion buscar producto
-searchProduct = function () {
+let searchProduct = function () {
   let search = document.getElementById('inputSearch').value;
+  let shipping = '';
+  let discount = '';
   if (search === '') {
     alert(
       'Error! Es necesario  que ingrese un caracter en el campo de busqueda.'
@@ -27,14 +29,14 @@ searchProduct = function () {
             let shipping = 'Envio gratis';
           } else {
             let shipping = '';
-          };
+          }
           // Condicional para el descuento en el precio
           if (data.results[i].original_price) {
             let discount = data.results[i].currency_id + ' ' + data.results[i].original_price;
             
           } else {
             let discount = '';
-          };
+          }
           li.innerHTML = `
         <div class="W5-p7" data-wt="W5"">
           <li>
@@ -51,7 +53,7 @@ searchProduct = function () {
                 <p class="text-success h6">${shipping}</p> 
                 <p id="id_art" hidden>${id}</p>                    
                 </div>
-         <div class="W5-cart "><button class="add-cart" id="btnDetails" onclick="getDetails('${id}')">Detalles</button><button class="fa fa-shopping-cart fa-2x"></button></div>
+        <div class="W5-cart "><button class="add-cart" id="btnDetails" onclick="getDetails('${id}')">Detalles</button><button class="fa fa-shopping-cart fa-2x"></button></div>
               </a>
             </div>
         </div>
@@ -59,14 +61,14 @@ searchProduct = function () {
         </div>`
           contenido2.appendChild(li)
           const btnDetails = document.getElementById('btnDetails');
-          //btnDetails.addEventListener('click', getDetails);
+          btnDetails.addEventListener('click', getDetails);
         }
       });
   }
 };
 
 // Funcion ver detalles
-getDetails = function (id) {
+let getDetails = function (id) {
   fetch(id)
     .then(res => res.json())
     .then(data => {
@@ -114,12 +116,12 @@ getDetails = function (id) {
           </ul>
         <p class="price">${data['0'].body.currency_id} ${data['0'].body.base_price}</p>
           <p class="buy">Comprar</p>
-       </div>
-     </div>`
-    });
+      </div>
+    </div>`
+  });
 };
 
-clearInput = function () {
+let clearInput = function () {
   document.getElementById('inputSearch').value = '';
 };
 
